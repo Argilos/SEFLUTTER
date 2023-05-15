@@ -44,7 +44,7 @@ class ClientName extends StatelessWidget{
   Widget build(BuildContext context){
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text('Name: ' + name),
+      child: Text('Name: $name'),
     );
 
   }
@@ -59,7 +59,7 @@ class ClientSurname extends StatelessWidget{
   Widget build(BuildContext context){
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text('Surname: ' + surname),
+      child: Text('Surname: $surname'),
     );
 
   }
@@ -78,7 +78,7 @@ class ClientGymID extends StatelessWidget{
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text('GymID: ' + generatedGymID.toString())
+      child: Text('GymID: $generatedGymID')
       );
     
     
