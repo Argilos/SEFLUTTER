@@ -6,6 +6,8 @@ import 'qrpage.dart';
 import 'membershipPage.dart';
 import 'personalTrainerPage.dart';
 import 'trainingPage.dart';
+import 'login.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -83,6 +85,10 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 5:
         page = TrainingPlansPage();
+
+        break;
+      case 6:
+        page=LoginPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -127,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   
                   NavigationRailDestination(
                       icon: Icon(Icons.video_collection),
-                      label: Text('Video exercises')),
+                      label: Text('Login Test')),
 
                       NavigationRailDestination(
                         icon: Icon(Icons.restaurant_menu), 
