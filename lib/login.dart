@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 
 
@@ -60,14 +63,34 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    // spajanje logina sa backendom
+                    var url = Uri.parse('http://localhost:8000/api/auth/login/');
+                    try {
+                      var response = await http.post(
+                        url,
+                        headers: {'Content-Type': 'application/json'},
+                        body: json.encode({'email': _email, 'password': _password}),
+                      );
+                      if (response.statusCode == 200) {
+                        print('Login successful');
+                        // Delete comments after finishing frontend
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => NextPage()),
+                        // );
+                      } else {
+                        print('Login failed');
+                      }
+                    } catch (e) {
+                      print('Request failed.');
+                    }
                   }
                 },
                 child: Text('Login'),
               ),
+
             ],
           ),
         ),
