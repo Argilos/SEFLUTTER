@@ -6,8 +6,7 @@ import 'qrpage.dart';
 import 'membershipPage.dart';
 import 'personalTrainerPage.dart';
 import 'trainingPage.dart';
-import 'login.dart';
-
+import 'barcode_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -66,13 +65,12 @@ class _MyHomePageState extends State<MyHomePage> {
     switch (selectedIndex) {
       case 0:
         page = Home();
-  
         break;
       case 1:
         page = Profile();
         break;
       case 2:
-        page = QRPage();
+        page =  barcode_page();
         break;
       case 3:
         page = MembershipPage();
@@ -85,11 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 5:
         page = TrainingPlansPage();
-
         break;
-      case 6:
-        page=LoginPage();
-        break;
+      // test case 6:
+      //   page = BarcodeGenerator.generateBarcodeWidget(context);
+      //   break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -133,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   
                   NavigationRailDestination(
                       icon: Icon(Icons.video_collection),
-                      label: Text('Login Test')),
+                      label: Text('Video exercises')),
 
                       NavigationRailDestination(
                         icon: Icon(Icons.restaurant_menu), 
