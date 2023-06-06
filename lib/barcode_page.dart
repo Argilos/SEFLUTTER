@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+
 
 
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
-import 'package:syncfusion_flutter_barcodes/barcodes.dart';
+
 
 // class BarcodeGenerator {
 //   static Widget generateBarcodeWidget() {
@@ -28,7 +28,7 @@ import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 //   }
 // }
 
-import 'profile.dart';
+
 
 
 
