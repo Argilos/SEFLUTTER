@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,8 +24,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  String _email = '';
-  String _password = '';
+  String _email = 'mirza.maksumic@gmail.com';
+  String _password = '12345';
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +77,25 @@ class _LoginPageState extends State<LoginPage> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     // spajanje logina sa backendom
+                    // provjera sifre!!
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              MyHomePage(),
+                        transitionsBuilder: (context, animation, secondaryAnimation, child){
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
+
+                          final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                       }
+                      ),
+                    );
                   }
                 },
                 child: Text('Login'),

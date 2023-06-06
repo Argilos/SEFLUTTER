@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login.dart';
 
 void main() {
   runApp(MyApp());
@@ -66,24 +67,106 @@ class _SignupPageState extends State<SignupPage> {
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () {
-                  String password = _passwordController.text;
-                  String retypePassword = _retypePasswordController.text;
+                      onPressed: () {
+                        String password = _passwordController.text;
+                        String retypePassword = _retypePasswordController.text;
 
-                  if (password == retypePassword) {
-                    // Passwords match, perform signup logic here
-                    setState(() {
-                      _passwordsMatch = true;
-                    });
-                  } else {
-                    // Passwords do not match
-                    setState(() {
-                      _passwordsMatch = false;
-                    });
-                  }
-                },
-                child: Text('Sign Up'),
-              ),
+                        if (password == retypePassword) {
+                          //backend params store
+                          setState(() {
+                            _passwordsMatch = true;
+                          });
+
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) => LoginPage(),
+                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                //animation params
+                                const begin = Offset(1.0, 0.0);
+                                const end = Offset.zero;
+                                const curve = Curves.ease;
+
+                                final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                                // Apply the slide transition animation to the child widget
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                            ),
+                          );
+                        } else {
+                          // Passwords do not match
+                          setState(() {
+                            _passwordsMatch = false;
+                          });
+
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              // Show an error dialog indicating that passwords do not match
+                              return AlertDialog(
+                                title: Text('Error'),
+                                content: Text('Passwords do not match'),
+                                actions: [
+                                  TextButton(
+                                    child: Text('OK'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
+                      child: Text('Sign Up'),
+),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     String password = _passwordController.text;
+              //     String retypePassword = _retypePasswordController.text;
+
+              //     if (password == retypePassword) {
+              //       // Passwords match, perform signup logic here
+              //       setState(() {
+              //         _passwordsMatch = true;
+              //       });
+              //     } else {
+              //       // Passwords do not match
+              //       setState(() {
+              //         _passwordsMatch = false;
+                      
+              //       });
+              //     }
+
+              //     Navigator.push(
+              //         context,
+              //        PageRouteBuilder(
+              //               pageBuilder: (context, animation, secondaryAnimation) =>
+              //                 LoginPage(),
+              //                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              //                 const begin = Offset(1.0, 0.0);
+              //                 const end = Offset.zero;
+              //                 const curve = Curves.ease;
+
+              //                 final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+              //                 return SlideTransition(
+              //                   position: animation.drive(tween),
+              //                   child: child,
+              //                 );
+              //          }
+              //         ),
+              //       );
+              //     },
+                
+        
+              //   child: Text('Sign Up'),
+              // ),
             ],
           ),
         ),

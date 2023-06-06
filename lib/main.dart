@@ -1,8 +1,9 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/login.dart';
 import 'package:provider/provider.dart';
 import 'profile.dart';
-
+import 'login.dart';
 import 'membershipPage.dart';
 import 'personalTrainerPage.dart';
 import 'trainingPage.dart';
@@ -25,7 +26,13 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue),
         ),
-        home: MyHomePage(),
+        initialRoute: '/',
+        routes: {
+            '/': (context) =>  LoginPage(),
+            '/home':(context) => MyHomePage(),
+
+        }
+        
       ),
     );
   }
