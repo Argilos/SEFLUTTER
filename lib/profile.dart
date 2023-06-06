@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-
+import 'barcode_page.dart';
 
 
 class Profile extends StatelessWidget {
@@ -23,9 +23,10 @@ class Profile extends StatelessWidget {
             SizedBox(height: 20), // Add some spacing between the texts
             ClientName('John'),
             ClientSurname('Johnes'),
-            ClientGymID(generatedGymID),
+            BarcodePage(clientGymID: generatedGymID.toString()),
             Padding(padding: const EdgeInsets.all(8.0),
             child: Text('Password: ********'),)
+            
             
 
           ],
