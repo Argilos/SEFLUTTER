@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/forgotPass.dart';
 import 'main.dart';
 
 void main() {
@@ -78,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                     _formKey.currentState!.save();
                     // spajanje logina sa backendom
                     // provjera sifre!!
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
@@ -100,6 +101,16 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: Text('Login'),
               ),
+              SizedBox(height: 16),
+              TextButton(
+                onPressed: (){
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+                  );
+                },
+                child: Text('Forgot Password ?'),
+                )
             ],
           ),
         ),

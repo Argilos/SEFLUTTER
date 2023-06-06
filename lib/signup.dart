@@ -77,7 +77,7 @@ class _SignupPageState extends State<SignupPage> {
                             _passwordsMatch = true;
                           });
 
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             PageRouteBuilder(
                               pageBuilder: (context, animation, secondaryAnimation) => LoginPage(),
@@ -124,49 +124,18 @@ class _SignupPageState extends State<SignupPage> {
                         }
                       },
                       child: Text('Sign Up'),
-),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     String password = _passwordController.text;
-              //     String retypePassword = _retypePasswordController.text;
+                ),
 
-              //     if (password == retypePassword) {
-              //       // Passwords match, perform signup logic here
-              //       setState(() {
-              //         _passwordsMatch = true;
-              //       });
-              //     } else {
-              //       // Passwords do not match
-              //       setState(() {
-              //         _passwordsMatch = false;
-                      
-              //       });
-              //     }
+            TextButton(
+              onPressed: (){
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
 
-              //     Navigator.push(
-              //         context,
-              //        PageRouteBuilder(
-              //               pageBuilder: (context, animation, secondaryAnimation) =>
-              //                 LoginPage(),
-              //                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              //                 const begin = Offset(1.0, 0.0);
-              //                 const end = Offset.zero;
-              //                 const curve = Curves.ease;
-
-              //                 final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-              //                 return SlideTransition(
-              //                   position: animation.drive(tween),
-              //                   child: child,
-              //                 );
-              //          }
-              //         ),
-              //       );
-              //     },
-                
-        
-              //   child: Text('Sign Up'),
-              // ),
+            child: Text('or Login'),
+            )
+              
             ],
           ),
         ),
