@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/login.dart';
 import 'package:provider/provider.dart';
 import 'profile.dart';
-import 'login.dart';
+
 import 'membershipPage.dart';
 import 'personalTrainerPage.dart';
 import 'trainingPage.dart';
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Profile();
         break;
       case 2:
-        page =  barcode_page();
+        page =  BarcodePage.generate();//generates barcode from gymID   IT IS RANDOM NOW, CHANGE AFTER SETTING BASE
         break;
       case 3:
         page = MembershipPage();
