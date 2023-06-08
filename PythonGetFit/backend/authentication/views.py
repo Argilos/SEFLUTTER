@@ -22,3 +22,10 @@ class LoginView(APIView):
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({'error': 'Invalid credentials'}, status=400)
+
+from models import User
+
+def create_user(request):
+    user = User(name="John", last_name="Doe", email="john@example.com", password="password")
+    user.save()
+    # Handle response or further processing
