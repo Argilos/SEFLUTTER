@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\adem\Desktop\GetFitProjectScannerPart\djangoenv"
+VIRTUAL_ENV="C:\Users\koraj\OneDrive\Documents\GitHub\SEFLUTTER\GetFitProjectScannerPart\djangoenv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

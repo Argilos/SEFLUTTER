@@ -7,3 +7,4 @@ class User(models.Model):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=100)
     unique_barcode_id = models.CharField(max_length=100)
+    membership_length = models.CharField(max_length=100)
