@@ -29,7 +29,7 @@ document.getElementById('extend-membership-form').addEventListener('submit', fun
     var barcodeInput = document.getElementById('barcode-input-extend');
     var resultDiv = document.getElementById('result-extend');
     
-    fetch('http://127.0.0.1:8000/barcode/check-membership/?unique_barcode_id=' + barcodeInput.value)
+    fetch('http://127.0.0.1:8000/barcode/extend-membership/?unique_barcode_id=' + barcodeInput.value)
         .then(function(response) {
             if (!response.ok) {
                 throw new Error('Error.');
@@ -37,7 +37,7 @@ document.getElementById('extend-membership-form').addEventListener('submit', fun
             return response.json();
         })
         .then(function(data) {
-            if (data.is_member) {
+            if (data.message === 'Članarina upješno produžena!') {
                 resultDiv.innerText = 'Članarina uspješno produžena!';
             } else {
                 resultDiv.innerText = 'Članarina nije produžena!';
@@ -47,3 +47,6 @@ document.getElementById('extend-membership-form').addEventListener('submit', fun
             resultDiv.innerText = 'Error: ' + error.message;
         });
 });
+
+
+

@@ -32,6 +32,23 @@ def extend_membership(request):
     response = build_response(response_data)
     return response
 
+def get_users(request):
+    users = User.objects.all()
+    user_list = []
+    for user in users:
+        user_data = {
+            'unique_barcode_id': user.unique_barcode_id,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'membership_length': user.membership_length
+        }
+        user_list.append(user_data)
+    
+    response_data = {'users': user_list}
+    response = build_response(response_data)
+    return response
+
 def build_response(data):
     response = JsonResponse(data)
     response["Access-Control-Allow-Origin"] = "*"
