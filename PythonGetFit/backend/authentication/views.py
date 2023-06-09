@@ -3,6 +3,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import User
 from .serializers import UserSerializer
+from django.shortcuts import get_object_or_404
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import User
 
 class RegisterView(APIView):
     def post(self, request):
@@ -22,10 +26,32 @@ class LoginView(APIView):
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({'error': 'Invalid credentials'}, status=400)
+        
+@api_view(['POST'])
+def signup(request):
+    name = request.data['name']
+    lastname = request.data['lastname']
+    email = request.data['email']
+    password = request.data['password']
+    unique_id = request.data['unique_id']
+    membership_countdown = request.data['membership_countdown']
 
-from models import User
+    user = User.objects.create(
+        name=name,
+        lastname = lastname, 
+        email=email,
+        password=password,
+        unique_id=unique_id,
+        membership_countdown=membership_countdown
+    )
 
-def create_user(request):
-    user = User(name="John", last_name="Doe", email="john@example.com", password="password")
-    user.save()
-    # Handle response or further processing
+    return Response({'message': 'User created successfully'})
+
+@api_view(['POST'])
+def login(request):
+    email = request.data['email']
+    password = request.data['password']
+
+    user = get_object_or_404(User, email=email, password=password)
+
+    return Response({'message': 'User logged in successfully'})

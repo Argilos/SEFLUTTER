@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'database_helper.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,9 +22,45 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _lastnameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _retypePasswordController = TextEditingController();
   bool _passwordsMatch = true;
+
+  void _signup() async {
+    String name = _nameController.text;
+    String lastname = _lastnameController.text;
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    // Generate a unique ID (you can modify this based on your requirements)
+    String uniqueId = generateUniqueId();
+
+    // Countdown membership length (you can modify this based on your requirements)
+    int membershipCountdown = 30;
+
+    // Create a user object
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    User user = User(
+      name: name,
+      lastname: lastname,
+      email: email,
+      password: password,
+      uniqueId: uniqueId,
+      membershipCountdown: membershipCountdown,
+    );
+
+    // Insert the user into the database
+    await databaseHelper.insertUser(user);
+
+    // Redirect to the login page
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,111 +70,60 @@ class _SignupPageState extends State<SignupPage> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Directionality(
-          textDirection: TextDirection.ltr, // Adjust this as per your desired text direction
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Full Name',
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Name',
               ),
-              SizedBox(height: 16.0),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _lastnameController,
+              decoration: InputDecoration(
+                labelText: 'Last Name',
               ),
-              SizedBox(height: 16.0),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                ),
-                obscureText: true,
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
               ),
-              TextField(
-                controller: _retypePasswordController,
-                decoration: InputDecoration(
-                  labelText: 'Repeat password',
-                  errorText: !_passwordsMatch ? 'Passwords do not match' : null,
-                ),
-                obscureText: true,
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                labelText: 'Password',
               ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                      onPressed: () {
-                        String password = _passwordController.text;
-                        String retypePassword = _retypePasswordController.text;
-
-                        if (password == retypePassword) {
-                          //backend params store
-                          setState(() {
-                            _passwordsMatch = true;
-                          });
-
-                          Navigator.pushReplacement(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) => LoginPage(),
-                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                //animation params
-                                const begin = Offset(1.0, 0.0);
-                                const end = Offset.zero;
-                                const curve = Curves.ease;
-
-                                final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-                                // Apply the slide transition animation to the child widget
-                                return SlideTransition(
-                                  position: animation.drive(tween),
-                                  child: child,
-                                );
-                              },
-                            ),
-                          );
-                        } else {
-                          // Passwords do not match
-                          setState(() {
-                            _passwordsMatch = false;
-                          });
-
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              // Show an error dialog indicating that passwords do not match
-                              return AlertDialog(
-                                title: Text('Error'),
-                                content: Text('Passwords do not match'),
-                                actions: [
-                                  TextButton(
-                                    child: Text('OK'),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      },
-                      child: Text('Sign Up'),
-                ),
-
+              obscureText: true,
+            ),
+            TextField(
+              controller: _retypePasswordController,
+              decoration: InputDecoration(
+                labelText: 'Repeat password',
+                errorText: !_passwordsMatch ? 'Passwords do not match' : null,
+              ),
+              obscureText: true,
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: _signup,
+              child: Text('Sign Up'),
+            ),
             TextButton(
-              onPressed: (){
-                Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
-
-            child: Text('or Login'),
-            )
-              
-            ],
-          ),
+              child: Text('or Login'),
+            ),
+          ],
         ),
       ),
     );

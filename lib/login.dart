@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/forgotPass.dart';
-import 'main.dart';
+import 'package:namer_app/signup.dart';
+import 'database_helper.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,110 +10,110 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My App',
+      title: 'Login',
       home: LoginPage(),
     );
   }
 }
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
-  String _email = 'mirza.maksumic@gmail.com';
-  String _password = '12345';
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  bool _loginFailed = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(
+        title: Text('Login'),
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: _formKey,
+        padding: EdgeInsets.all(16.0),
+        child: Directionality(
+          textDirection: TextDirection.ltr, // Adjust this as per your desired text direction
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
+              TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  border: OutlineInputBorder(),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _email = value!;
-                },
               ),
-              SizedBox(height: 16),
-              TextFormField(
-                obscureText: true,
+              SizedBox(height: 16.0),
+              TextField(
+                controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _password = value!;
-                },
+                obscureText: true,
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    // spajanje logina sa backendom
-                    // provjera sifre!!
+                onPressed: () async {
+                  String email = _emailController.text;
+                  String password = _passwordController.text;
+
+                  User? user = await DatabaseHelper.instance.getUserByEmail(email);
+
+                  if (user != null && user.password == password) {
+                    // Successful login
+                    setState(() {
+                      _loginFailed = false;
+                    });
+
+                    // Navigate to the home page or perform any desired actions
+                    // Replace `HomePage` with your desired home page widget
                     Navigator.pushReplacement(
                       context,
-                      PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              MyHomePage(),
-                        transitionsBuilder: (context, animation, secondaryAnimation, child){
-                          const begin = Offset(1.0, 0.0);
-                          const end = Offset.zero;
-                          const curve = Curves.ease;
-
-                          final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                       }
-                      ),
+                      MaterialPageRoute(builder: (context) => HomePage()),
                     );
+                  } else {
+                    // Login failed
+                    setState(() {
+                      _loginFailed = true;
+                    });
                   }
                 },
                 child: Text('Login'),
               ),
-              SizedBox(height: 16),
+              if (_loginFailed)
+                Text(
+                  'Login failed. Please check your credentials.',
+                  style: TextStyle(color: Colors.red),
+                ),
               TextButton(
-                onPressed: (){
+                onPressed: () {
+                  // Navigate to the signup page
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+                    MaterialPageRoute(builder: (context) => SignupPage()),
                   );
                 },
-                child: Text('Forgot Password ?'),
-                )
+                child: Text('Create an account'),
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: Center(
+        child: Text('Welcome to the Home Page!'),
       ),
     );
   }

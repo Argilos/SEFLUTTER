@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/login.dart';
+import 'package:namer_app/signup.dart';
 import 'package:provider/provider.dart';
 import 'profile.dart';
 
