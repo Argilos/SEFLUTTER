@@ -2,7 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/diet.dart';
 import 'package:namer_app/login.dart';
-import 'package:namer_app/welcomePage.dart';
+import 'package:namer_app/welcomePage.dart'; // Kept import from `master`
 import 'package:provider/provider.dart';
 import 'profile.dart';
 import 'welcomePage.dart';
@@ -13,6 +13,10 @@ import 'barcode_page.dart';
 import 'diet.dart';
 import 'info.dart';
 import 'quote.dart';
+
+
+
+
 void main() {
   runApp(MyApp());
 }
@@ -32,10 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-            '/': (context) =>  welcomePage(),
+            '/': (context) =>  LoginPage(),
             '/home':(context) => MyHomePage(),
-            '/trainingPlan': (context) => TrainingPlanPage(downloadUrl: 'https://www.mediafire.com/file/5my9ebafdt3avcn/test.pdf/file'),
-            
+
         }
         
       ),
@@ -94,17 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
             imageUrl: 'https://athleticsweekly.com/wp-content/uploads/2020/11/PT-image-via-OriGym.jpg',);
         break;
       case 5:
-        page = TrainingPlanPage(
-          downloadUrl: 'https://www.mediafire.com/file/5my9ebafdt3avcn/test.pdf/file',
-        );
-
-        break;
-      
-      case 6:
-        page = dietPage();
-        break;
-      case 7:
-        page = InfoPage(); 
+        page = TrainingPlansPage();
         break;
       // test case 6:
       //   page = BarcodeGenerator.generateBarcodeWidget(context);
@@ -148,13 +141,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       icon: Icon(Icons.fitness_center), 
                       label: Text('Training plan')),
 
+                  
+                  
+                  NavigationRailDestination(
+                      icon: Icon(Icons.video_collection),
+                      label: Text('Video exercises')),
+
                       NavigationRailDestination(
                         icon: Icon(Icons.restaurant_menu), 
                         label: Text('Diet plan'),),
-
-                     NavigationRailDestination(
-                        icon: Icon(Icons.info), 
-                        label: Text('Info'),),   
                 ],
                 selectedIndex: selectedIndex,
                 onDestinationSelected: (value) {
@@ -186,10 +181,9 @@ class Home extends StatelessWidget {
       title: 'getFit',
       home: Scaffold(
         appBar: AppBar(title: Text('Home')),
-        body: QuotePage(),
-      ),
+        body: const Center(child: Text('Explore new things every day !')),
+        ),
     );
-    
   }
   
 }

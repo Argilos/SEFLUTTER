@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/profile.dart';
 import 'login.dart';
 import 'database_helper.dart';
 
@@ -34,6 +35,16 @@ class _SignupPageState extends State<SignupPage> {
     String lastname = _lastnameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
+    String retypePassword = _retypePasswordController.text;
+
+    if (password != retypePassword) {
+      setState(() {
+        _passwordsMatch = false;
+      });
+      return;
+    }
+
+    // Passwords match, continue with user creation
 
     // Generate a unique ID (you can modify this based on your requirements)
     String uniqueId = generateUniqueId();
@@ -42,8 +53,8 @@ class _SignupPageState extends State<SignupPage> {
     int membershipCountdown = 30;
 
     // Create a user object
-    DatabaseHelper databaseHelper = DatabaseHelper();
     User user = User(
+      id: 0, // Assign a default value to the 'id' parameter
       name: name,
       lastname: lastname,
       email: email,
@@ -53,12 +64,13 @@ class _SignupPageState extends State<SignupPage> {
     );
 
     // Insert the user into the database
+    DatabaseHelper databaseHelper = DatabaseHelper();
     await databaseHelper.insertUser(user);
 
-    // Redirect to the login page
+    // Redirect to the new window
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
+      MaterialPageRoute(builder: (context) => Profile()),
     );
   }
 
