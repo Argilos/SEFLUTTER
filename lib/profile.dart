@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'barcode_page.dart';
 
-
 class Profile extends StatelessWidget {
- const Profile({Key? key}) : super(key: key);
+  const Profile({Key? key}) : super(key: key);
 
- @override
- Widget build(BuildContext context){
-  RandomGymID randomGymID = RandomGymID();
+  @override
+  Widget build(BuildContext context) {
+    RandomGymID randomGymID = RandomGymID();
     int generatedGymID = randomGymID.generateRandomNumber();
-  return MaterialApp(
-    title: 'Profile',
-    home: Scaffold(
+    return MaterialApp(
+      title: 'Profile',
+      home: Scaffold(
         appBar: AppBar(title: Text('Home')),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -20,15 +19,14 @@ class Profile extends StatelessWidget {
           children: [
             SizedBox(height: 20),
             Text('Personal information'),
-            SizedBox(height: 20), // Add some spacing between the texts
+            SizedBox(height: 20),
             ClientName('John'),
             ClientSurname('Johnes'),
-            BarcodePage(clientGymID: generatedGymID.toString()),
-            Padding(padding: const EdgeInsets.all(8.0),
-            child: Text('Password: ********'),)
-            
-            
-
+            ClientGymID(generatedGymID),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Password: ********'),
+            ),
           ],
         ),
       ),
@@ -36,55 +34,45 @@ class Profile extends StatelessWidget {
   }
 }
 
-class ClientName extends StatelessWidget{
+class ClientName extends StatelessWidget {
   final String name;
 
   const ClientName(this.name);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text('Name: $name'),
     );
-
   }
 }
 
-class ClientSurname extends StatelessWidget{
+class ClientSurname extends StatelessWidget {
   final String surname;
 
   const ClientSurname(this.surname);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text('Surname: $surname'),
     );
-
   }
 }
 
-class ClientGymID extends StatelessWidget{
+class ClientGymID extends StatelessWidget {
   final int gymID;
 
   const ClientGymID(this.gymID);
 
   @override
-  Widget build(BuildContext context){
-    RandomGymID randomGymID = RandomGymID();
-    int generatedGymID = randomGymID.generateRandomNumber();
-
-
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text('GymID: $generatedGymID')
-      );
-    
-    
-
-
+      child: Text('GymID: $gymID'),
+    );
   }
 }
 

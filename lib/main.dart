@@ -1,14 +1,21 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/diet.dart';
 import 'package:namer_app/login.dart';
-import 'package:namer_app/signup.dart';
+import 'package:namer_app/welcomePage.dart'; // Kept import from `master`
 import 'package:provider/provider.dart';
 import 'profile.dart';
-
+import 'welcomePage.dart';
 import 'membershipPage.dart';
 import 'personalTrainerPage.dart';
 import 'trainingPage.dart';
 import 'barcode_page.dart';
+import 'diet.dart';
+import 'info.dart';
+import 'quote.dart';
+
+
+
 
 void main() {
   runApp(MyApp());

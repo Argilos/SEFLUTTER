@@ -14,6 +14,34 @@ class PersonalTrainerPage extends StatelessWidget{
     required this.imageUrl,
   });
 
+  void _showContactInfo(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Contact Information'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Phone Number: +123456789'),
+              SizedBox(height: 8),
+              Text('Email: mikemikowski@example.com'),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -45,7 +73,7 @@ class PersonalTrainerPage extends StatelessWidget{
             SizedBox(height: 18),
             ElevatedButton(
               onPressed: (){
-                //booking
+                _showContactInfo(context);
               },
               child: Text('Book Personal Trainer'),
             )

@@ -1,38 +1,8 @@
 import 'package:flutter/material.dart';
-
-
-
+import 'dart:math';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
-
-// class BarcodeGenerator {
-//   static Widget generateBarcodeWidget() {
-//     return SfBarcodeGenerator(
-//       value: '1234567890', // Provide the barcode value here
-//       symbology: QRCode(),
-//     );
-//   }
-// }
-
-// class barcode_page extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     Widget barcodeWidget = BarcodeGenerator.generateBarcodeWidget();
-
-//     return Scaffold(
-//       appBar: AppBar(title: Text('Barcode Generator')),
-//       body: Center(
-//         child: barcodeWidget,
-//       ),
-//     );
-//   }
-// }
-
-import 'profile.dart';
-import 'dart:math';
-
-
- class BarcodeGenerator {
+class BarcodeGenerator {
   static Widget generateBarcodeWidget(String clientGymID) {
     return Container(
       width: 300,
@@ -47,7 +17,7 @@ import 'dart:math';
 class BarcodePage extends StatelessWidget {
   final String clientGymID;
 
-  const BarcodePage({required this.clientGymID});
+  BarcodePage({required this.clientGymID});
 
   factory BarcodePage.generate() {
     String generatedGymID = generateRandomGymID();
@@ -55,8 +25,8 @@ class BarcodePage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context){
-    Widget barcodeWidget = BarcodeGenerator.generateBarcodeWidget(clientGymID); // Pass the clientGymID to generate the barcode
+  Widget build(BuildContext context) {
+    Widget barcodeWidget = BarcodeGenerator.generateBarcodeWidget(clientGymID);
     return Scaffold(
       appBar: AppBar(title: Text('Barcode Generator')),
       body: Center(
@@ -66,7 +36,7 @@ class BarcodePage extends StatelessWidget {
             Text('Client Gym ID: $clientGymID'),
             barcodeWidget,
           ],
-        )
+        ),
       ),
     );
   }
