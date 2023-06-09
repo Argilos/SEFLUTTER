@@ -11,6 +11,8 @@ environment:
 dependencies:
   qr_flutter: ^4.0.0
   unicons: any
+  url_launcher: ^6.0.9
+  dio: ^4.0.0
 
   flutter:
     sdk: flutter

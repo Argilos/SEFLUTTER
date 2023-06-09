@@ -1,71 +1,44 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
+class TrainingPlanPage extends StatelessWidget {
+  final String downloadUrl;
 
-class TrainingPlansPage extends StatefulWidget{
-  const TrainingPlansPage({Key? key}) : super(key: key);
+  const TrainingPlanPage({required this.downloadUrl});
 
-  @override
-  _TrainingPlansPageState createState() => _TrainingPlansPageState();
-}
-
-class _TrainingPlansPageState extends State<TrainingPlansPage> {
-  late String _downloadUrl;
-  late String _fileName;
-
-
-  Future<void> _downloadFile() async{
-    final directory = await getExternalCacheDirectories();
-    final file = File('${directory!.first.path}/$_fileName');
-    final response = await http.get(Uri.parse(_downloadUrl));
-
-    await file.writeAsBytes(response.bodyBytes);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('File downloaded sucessfully')),
-
-    );
+  Future<void> _launchURL() async {
+    if (await canLaunch(downloadUrl)) {
+      await launch(downloadUrl);
+    } else {
+      throw 'Could not launch $downloadUrl';
+    }
   }
 
   @override
-  Widget build(BuildContext context){
-    _downloadUrl = 'https://www.mediafire.com/file/5my9ebafdt3avcn/test.pdf/file';
-    _fileName = 'trainingPlan.pdf';
-
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Training plans'),
-
+        title: Text('Training Plan'),
       ),
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Upper body plan',
-            style: TextStyle(fontSize: 24.0, 
-            fontWeight: FontWeight.bold),
+            Text(
+              'Training Plan Page',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 16.0),
-            Text('You can download this plan for free',
-            textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18.0),
-              ),
-
-               SizedBox(height: 32.0),
             ElevatedButton(
-              onPressed: () {
-                _downloadFile();
-              },
+              onPressed: _launchURL,
               child: Text('Download'),
             ),
           ],
         ),
       ),
-      
-      
-      
-      );
+    );
   }
 }
